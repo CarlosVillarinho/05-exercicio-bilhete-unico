@@ -23,6 +23,9 @@ public class Util {
         do {
             //JOptionPane.showInputDialog(menu); (maneira antiga, fica repetinfdo -- JOptionPane.)
             opcao = parseInt(showInputDialog(menu));
+            if(opcao < 1 || opcao > 3){
+                showMessageDialog(null, "Opcao invalida.");
+            }
             if (opcao == 1) {
                 menuAdmin();
             }else{
@@ -40,7 +43,7 @@ public class Util {
     //metodo privado - ADM
     private void menuAdmin(){
         int opcao = 0;
-        String menuAdmin = "MENU ADMINISTRADOR\n1. Emitir bilhete\n2. Listar bilhetes\n3. Excluir bilhete\n4.Sair";
+        String menuAdmin = "MENU ADMINISTRADOR\n1. Emitir bilhete\n2. Listar bilhetes\n3. Excluir bilhete\n4. Sair";
 
         do{
             if(opcao == 1){
@@ -57,6 +60,9 @@ public class Util {
                 }
             }
             opcao = parseInt(showInputDialog(menuAdmin));
+            if(opcao < 1 || opcao > 4){
+                showMessageDialog(null, "Opcao invalida.");
+            }
         }while(opcao != 4);
     }
 
@@ -94,10 +100,65 @@ public class Util {
     //metodo privado - USER
     private void menuUsuario(){
         int opcao = 0;
-        String menuUsuario = "MENU USUARIO\n1. \n2. \n3. \n4.Sair";
+        String menuUsuario = "MENU USUARIO\n1. Carregar Bilhete\n2. Consultar saldo\n3. Passar na catraca \n4. Sair";
 
         do{
+            if(opcao == 1){
+                carregarBilhete();
+            }else{
+                if(opcao == 2){
+                   consultarSaldo();
+                }else{
+                    if(opcao == 3){
+                      passarCatraca();
+                    }else{
+
+                    }
+                }
+            }
             opcao = parseInt(showInputDialog(menuUsuario));
+            if(opcao < 1 || opcao > 4){
+                showMessageDialog(null, "Opcao invalida.");
+            }
         }while(opcao != 4);
+    }
+
+    //metodo privado - USER
+    private int pesquisar(){
+        long cpf = parseLong(showInputDialog("CPF"));
+
+        for(int i=0;i<index;i++){
+            if(bilhete[i].usuario.cpf == cpf){
+                return i;
+            }
+        }
+        showMessageDialog(null, cpf + "nao encontrado.");
+        return -1;
+    }
+
+    //metodo privado - USER
+    private void carregarBilhete(){
+        int indice = pesquisar();
+        double valor;
+        if(indice != -1){
+            valor = parseDouble(showInputDialog("Valor da recarga"));
+            bilhete[indice].carregar(valor);
+        }
+    }
+
+    //metodo privado - USER
+    private void consultarSaldo(){
+        int indice = pesquisar();
+        if(indice != -1){
+            showMessageDialog(null, "Saldo = R$ " + bilhete[indice].consultar());
+        }
+    }
+
+    //metodo privado - USER
+    private void passarCatraca(){
+        int indice = pesquisar();
+        if(indice != -1){
+            showMessageDialog(null,  bilhete[indice].passarCatraca());
+        }
     }
 }
