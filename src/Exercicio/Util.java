@@ -53,7 +53,7 @@ public class Util {
                     listarBilhete();
                 }else{
                     if(opcao == 3){
-                        //excluirBilhete();
+                        excluirBilhete();
                     }else{
 
                     }
@@ -95,6 +95,19 @@ public class Util {
             aux += "CPF do usuario: " + bilhete[i].usuario.cpf + "\n" + "\n";
         }
         showMessageDialog(null, aux);
+    }
+
+    //metodo privado - ADM
+    private void excluirBilhete(){
+        int resposta;
+        int indice = pesquisar();
+        if (indice != -1){
+            resposta = showConfirmDialog(null, "Tem certeza que deseja excluir?");
+            if(resposta == YES_OPTION){
+                bilhete[indice] = bilhete[index -1];
+                index--;
+            }
+        }
     }
 
     //metodo privado - USER
